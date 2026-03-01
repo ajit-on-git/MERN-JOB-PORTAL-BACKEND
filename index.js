@@ -1,3 +1,5 @@
+// index.js
+
 import express from "express"
 import cors from "cors"
 import cookieParser from "cookie-parser";
@@ -12,11 +14,9 @@ dotenv.config({});
 const app = express();
 
 
-//middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, "public")))
 
 const allowedOrigins = [
   "http://localhost:5173",
@@ -24,18 +24,9 @@ const allowedOrigins = [
 ];
 
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    }
-    return callback(new Error("Not allowed by CORS"));
-  },
+  origin: ["http://localhost:5173", "https://mern-job-portal-frontend-5fmi.vercel.app"],
   credentials: true
 }));
-
-
-
 
 const PORT = process.env.PORT || 3000;
 
@@ -51,10 +42,3 @@ app.listen (PORT , ()=> {
     console.log(`Server is running on http://localhost:${PORT}`);  
 })
 
-
-// netstat -ano | findstr :8000
-// taskkill /PID <PID> /F
-
-
-// cd .\backend\
-// npm run dev

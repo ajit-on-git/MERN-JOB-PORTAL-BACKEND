@@ -1,3 +1,5 @@
+// application.controller.js
+
 import { Application } from "../models/application.model.js";
 import { Job } from "../models/job.model.js";
 import { login } from "./user.controller.js";

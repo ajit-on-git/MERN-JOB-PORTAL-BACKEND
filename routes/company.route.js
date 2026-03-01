@@ -1,3 +1,6 @@
+// company.route.js
+
+
 import express from "express";
 import isAuthenticated from "../middlewares/isAuthenticated.js";
 import { getCompany, getCompanyById, registerCompany, updateCompany } from "../controllers/company.controller.js";
