@@ -17,9 +17,13 @@ export const register = async (req, res) => {
       });
     }
 
-    const file = req.file;
-    const fileUri = getDataUri(file);
-    const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+if (req.file) {
+  const fileUri = getDataUri(req.file);
+  const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+
+  user.profile.resume = cloudResponse.secure_url;
+  user.profile.resumeOriginalName = req.file.originalname;
+}
 
     const user = await User.findOne({ email });
     if (user) {
