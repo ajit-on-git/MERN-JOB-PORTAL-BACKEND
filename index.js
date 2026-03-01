@@ -17,15 +17,25 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, "public")))
-const corsOptions = {
-    origin: 'https://mern-job-portal-frontend-5fmi.vercel.app',  // Adjust to your frontend URL
-    methods: 'GET,POST,PUT,DELETE',
-    credentials: true,
-}
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://mern-job-portal-frontend-5fmi.vercel.app"
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error("Not allowed by CORS"));
+  },
+  credentials: true
+}));
 
 
 
-app.use(cors(corsOptions));
 
 const PORT = process.env.PORT || 3000;
 
