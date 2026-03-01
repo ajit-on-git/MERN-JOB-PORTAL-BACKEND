@@ -51,8 +51,12 @@ export const postJob = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    console.log(error);
-  }
+  console.error(error);
+  return res.status(500).json({
+    message: "Internal server error",
+    success: false,
+  });
+}
 };
 
 export const getAllJobs = async (req, res) => {
