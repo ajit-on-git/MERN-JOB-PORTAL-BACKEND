@@ -114,8 +114,8 @@ export const login = async (req, res) => {
       .cookie("token", token, {
         maxAge: 1 * 24 * 60 * 60 * 1000,
         httpOnly: true,
-        secure: true,
-        sameSite: "none",
+        secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       })
       .json({
         message: `Welcome back ${user.fullname}`,
@@ -176,13 +176,21 @@ export const updateProfile = async (req, res) => {
       user.profile.skills = skills.split(",");
     }
 
-    if (req.file) {
-      const fileUri = getDataUri(req.file);
-      const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+if (req.file && req.file.buffer) {
+  const fileUri = getDataUri(req.file);
 
-      user.profile.resume = cloudResponse.secure_url;
-      user.profile.resumeOriginalName = req.file.originalname;
-    }
+  if (!fileUri || !fileUri.content) {
+    return res.status(400).json({
+      message: "Invalid file",
+      success: false,
+    });
+  }
+
+  const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+
+  user.profile.resume = cloudResponse.secure_url;
+  user.profile.resumeOriginalName = req.file.originalname;
+}
 
     await user.save();
 
