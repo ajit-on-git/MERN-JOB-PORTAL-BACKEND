@@ -10,12 +10,7 @@ import applicantionRoute from "./routes/application.route.js";
 
 dotenv.config({});
 const app = express();
-// app.get("/home",(req,res)=>{
-//     return res.status(200).json({
-//         message:"I am from backend",
-//         success:true
-//     })
-// })
+
 
 //middleware
 app.use(express.json());
@@ -23,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, "public")))
 const corsOptions = {
-    origin: 'https://mern-job-portal-frontend-5fmi.vercel.app/',  // Adjust to your frontend URL
+    origin: 'https://mern-job-portal-frontend-5fmi.vercel.app',  // Adjust to your frontend URL
     methods: 'GET,POST,PUT,DELETE',
     credentials: true,
 }
