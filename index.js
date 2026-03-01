@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, "public")))
 const corsOptions = {
-    origin: 'http://localhost:5173',  // Adjust to your frontend URL
+    origin: 'https://mern-job-portal-frontend-5fmi.vercel.app/',  // Adjust to your frontend URL
     methods: 'GET,POST,PUT,DELETE',
     credentials: true,
 }
