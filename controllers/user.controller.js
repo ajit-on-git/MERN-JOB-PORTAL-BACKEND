@@ -178,19 +178,23 @@ export const updateProfile = async (req, res) => {
       user.profile.skills = skills.split(",");
     }
 
-if (req.file && req.file.buffer) {
-  const fileUri = getDataUri(req.file);
-
-  if (!fileUri || !fileUri.content) {
-    return res.status(400).json({
-      message: "Invalid file",
-      success: false,
+if (req.file) {
+  const streamUpload = (req) => {
+    return new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        { resource_type: "raw" },
+        (error, result) => {
+          if (result) resolve(result);
+          else reject(error);
+        }
+      );
+      stream.end(req.file.buffer);
     });
-  }
+  };
 
-  const cloudResponse = await cloudinary.uploader.upload(fileUri.content,{resource_type:"raw"});
+  const result = await streamUpload(req);
 
-  user.profile.resume = cloudResponse.secure_url;
+  user.profile.resume = result.secure_url;
   user.profile.resumeOriginalName = req.file.originalname;
 }
 
