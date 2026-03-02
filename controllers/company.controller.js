@@ -96,7 +96,7 @@ export const updateCompany = async (req, res) => {
 
     if (!company) {
       return res.status(404).json({
-        message: "company not found to update",
+        message: `company ${req.params.id} not found to update`,
         success: false,
       });
     }
