@@ -99,7 +99,8 @@ export const updateCompany = async (req, res) => {
         message: `company ${req.params.id} not found to update`,
         success: false,
       });
-    }
+    } 
+    // 69a418abcc0d5e5e14cff04a 69a418abcc0d5e5e14cff04a
     return res.status(200).json({
       message: "company information updated",
       company,
