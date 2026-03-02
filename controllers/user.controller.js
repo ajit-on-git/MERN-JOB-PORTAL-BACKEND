@@ -188,7 +188,7 @@ if (req.file && req.file.buffer) {
     });
   }
 
-  const cloudResponse = await cloudinary.uploader.upload(fileUri.content,{resource_type:"auto"});
+  const cloudResponse = await cloudinary.uploader.upload(fileUri.content,{resource_type:"raw"});
 
   user.profile.resume = cloudResponse.secure_url;
   user.profile.resumeOriginalName = req.file.originalname;
