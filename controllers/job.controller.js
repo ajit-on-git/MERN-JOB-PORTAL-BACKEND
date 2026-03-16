@@ -53,7 +53,7 @@ const job = await Job.create({
   } catch (error) {
   console.error(error);
   return res.status(500).json({
-    message: "Internal server error",
+    message: "Internal server error" + error,
     success: false,
   });
 }
